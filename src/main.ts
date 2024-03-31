@@ -2,10 +2,14 @@ import process from "process"
 import path from "path";
 import chokidar from "chokidar";
 
+type FilterMode = "do-nothing" | "quarantine" | "delete";
 
 interface ConfigFile {
-    "filler-mode": "do-nothing" | "quarantine" | "delete";
+    "filler-mode"?: FilterMode;
+    "quarantine-directory"?: string;
     directory: {
+        "filler-mode"?: FilterMode;
+        "quarantine-directory"?: string;
         path: string;
     }[];
 }
