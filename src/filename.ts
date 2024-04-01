@@ -5,7 +5,9 @@ const formats: [RegExp, string[]][] = [
     // [GroupName] Episode Name S01 - 01 [hash].mkv
     [/\[.+\] (.+?) (S\d* )?- (\d+) \[.+\]/gi, ["name", "season", "episode"]],
     // [ReinForce] Suki na Ko ga Megane 01 (BDRip 1920x1080 x264 FLAC).mkv
-    [/\[.+\] (.+?) (\d+).*./gi, ["name", "episode"]],
+    [/\[.+\] (.+?) (\d+).*/gi, ["name", "episode"]],
+    // [HorribleSubs] One Piece - 932 [720p]
+    [/\[.+\] (.+?) - (\d+).*/gi, ["name", "episode"]],
 
     // the extremely greedy match as long as we have SxxEyy or Exx it matches
     [/^(.*?)S(\d{2})E(\d{2})/gi, ["name", "season", "episode"]],
@@ -35,7 +37,8 @@ export const parseFilename = (filename: string): Episode | null => {
 
         if (nameIndex >= 0) {
             episode.name = match[nameIndex + 1];
-            episode.name = episode.name.trim();
+
+            episode.name = episode.name.replaceAll("-", " ").replaceAll("_", " ").trim();
         }
 
         if (seasonIndex >= 0) {

@@ -1,6 +1,7 @@
 import process from "process"
 import path from "path";
 import chokidar from "chokidar";
+import { parseFilename } from "./filename";
 
 type FilterMode = "do-nothing" | "quarantine" | "delete";
 
@@ -20,7 +21,13 @@ const main = async () => {
     const config: ConfigFile = (await import(Bun.env.NR_CONFIG_FILE ?? defaultFile)).default;
 
     chokidar.watch((config.directory ?? []).map(dir => dir.path)).on("add", (path, stats) => {
-        console.log(path, stats);
+        const episode = parseFilename(path);
+        if (!episode) {
+            console.error(`Path: ${path} could not be parsed.`);
+            return;
+        }
+
+        console.log(episode)
     });
 };
 

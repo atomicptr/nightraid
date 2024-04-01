@@ -15,8 +15,10 @@ test("parse filenames", () => {
         ["Ninja.Kamui.S01E08.1080p.MAX.WEB-DL.DDP2.0.H.264-VARYG.mkv", { name: "Ninja.Kamui.", season: 1, episode: 8 }],
         ["[ReinForce] Suki na Ko ga Megane 01 (BDRip 1920x1080 x264 FLAC).mkv", { name: "Suki na Ko ga Megane", season: null, episode: 1 }],
         ["[No subs] 声之形.大陆公映版.国语.A.Silent.Voice.The.Shape.Of.Voice.2017.1080P.WEB-DL.AAC.X264.mkv", null],
-        ["[Grupa Mirai] Dr. Slump Arale-chan - 054 [DVD 720x540 AAC] [574642AD].mkv", { name: "Dr. Slump Arale-chan", season: null, episode: 54 }],
-        ["Detective_Conan-S07E01 0163.mkv", { name: "Detective_Conan-", season: 7, episode: 1 }]
+        ["[Grupa Mirai] Dr. Slump Arale-chan - 054 [DVD 720x540 AAC] [574642AD].mkv", { name: "Dr. Slump Arale chan", season: null, episode: 54 }],
+        ["Detective_Conan-S07E01 0163.mkv", { name: "Detective Conan", season: 7, episode: 1 }],
+        ["[HorribleSubs] One Piece - 932 [720p]", { name: "One Piece", season: null, episode: 932 }],
+        ["[SubsPlease] One Piece - 1047 (720p) [BF2DE705]", { name: "One Piece", season: null, episode: 1047 }]
     ];
 
     matrix.forEach(([input, expected]) => {
