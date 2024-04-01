@@ -9,6 +9,8 @@
     "typescript": "^5.0.0"
   },
   "dependencies": {
-    "chokidar": "^3.6.0"
+    "cheerio": "^1.0.0-rc.12",
+    "chokidar": "^3.6.0",
+    "node-cache": "^5.1.2"
   }
 }

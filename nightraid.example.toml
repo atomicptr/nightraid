@@ -1,0 +1,5 @@
+filler-mode = "quarantine"
+
+[[directory]]
+path = "/home/username/Downloads"
+quarantine-directory = "/home/username/Downloads/_quarantine"
