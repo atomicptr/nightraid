@@ -1,4 +1,4 @@
-# night-raid
+# nightraid
 
 A service that monitors directories for filler episodes of anime, powered by animefillerlist.com, made with [Bun](https://bun.sh).
 
@@ -23,7 +23,7 @@ There are three filler modes available:
 It's recommended to use Docker:
 
 ```bash
-$ docker run --rm -v nightraid.toml:/app/nightraid.toml ghcr.io/atomicptr/night-raid:latest
+$ docker run --rm -v nightraid.toml:/app/nightraid.toml ghcr.io/atomicptr/nightraid:latest
 ```
 
 ## License
