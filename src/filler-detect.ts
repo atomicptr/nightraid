@@ -6,7 +6,8 @@ const cache = new NodeCache({ stdTTL: 3600, checkperiod: 3600 });
 
 const USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.79 Safari/537.36";
 
-const BASE_SEARCH_URL = "https://www.animefillerlist.com/search/node/"
+const BASE_SEARCH_URL = "https://www.animefillerlist.com/search/node/";
+const FILLER_PAGE_BASE = "https://www.animefillerlist.com/shows/";
 
 const searchShowUrl = async (episodeName: string): Promise<string | null> => {
     const cacheKey = `nr::show-url::${episodeName}`;
@@ -22,17 +23,30 @@ const searchShowUrl = async (episodeName: string): Promise<string | null> => {
     });
 
     const $ = load(await data.text());
-    const link = $(".search-result a");
+    const links = $(".search-results").find(".search-result a");
 
-    if (!link) {
+    if (links.length === 0) {
         return null;
     }
 
-    const href = link.attr("href");
+    for (const link of links) {
+        const href = link.attribs["href"];
 
-    if (href) {
-        cache.set(cacheKey, href);
-        return href;
+        if (!href) {
+            continue;
+        }
+
+        const parts = href.substring(FILLER_PAGE_BASE.length)
+            .split("/")
+            .filter(l => !!l);
+
+        // try to avoid links to other stuff
+        if (parts.length === 1) {
+            const fillerPageUrl = FILLER_PAGE_BASE + parts[0];
+    
+            cache.set(cacheKey, fillerPageUrl);
+            return fillerPageUrl;
+        }
     }
 
     return null;
@@ -102,7 +116,7 @@ const isInFillerList = async (episode: Episode, fillerList: string): Promise<boo
 export const isFiller = async (episode: Episode): Promise<boolean> => {
     const showUrl = await searchShowUrl(episode.name);
     if (!showUrl) {
-        console.error(`Could not determine show url for: ${episode}`);
+        console.error(`Could not determine show url for: ${JSON.stringify(episode)}`);
         return false;
     }
 
